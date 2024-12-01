@@ -1,0 +1,50 @@
+{
+    "mv1": {
+        "name": "Bubble Beam",
+        "type": "water",
+        "power": 70,
+        "accuracy": 100,
+        "maxUses": 15,
+        "hitCount":  1
+    },
+    "mv2": {
+        "name": "Flame Thrower",
+        "type": "fire",
+        "power": 70,
+        "accuracy": 100,
+        "maxUses": 15,
+        "hitCount": 1
+    },
+    "mv3": {
+        "name": "Leaf Blade",
+        "type": "grass",
+        "power": 70,
+        "accuracy": 100,
+        "maxUses": 15,
+        "hitCount": 1
+    },
+    "mv4": {
+        "name": "Tackle",
+        "type": "normal",
+        "power": 70,
+        "accuracy": 100,
+        "maxUses": 15,
+        "hitCount": 1
+    },
+    "mv5": {
+        "name": "Bite",
+        "type": "normal",
+        "power": 70,
+        "accuracy": 100,
+        "maxUses": 15,
+        "hitCount": 1
+    },
+    "mv6": {
+        "name": "Scratch",
+        "type": "normal",
+        "power": 70,
+        "accuracy": 100,
+        "maxUses": 15,
+        "hitCount": 1
+    }
+}

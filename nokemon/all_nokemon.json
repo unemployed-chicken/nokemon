@@ -1,0 +1,42 @@
+{
+    "mon1": {
+        "name": "Bulbie",
+        "type": "grass",
+        "hp": 100,
+        "atk": 99,
+        "def": 99,
+        "spAtk": 99,
+        "spDef": 99,
+        "spd": 99
+    },
+    "mon2": {
+        "name": "Char",
+        "type": "fire",
+        "hp": 100,
+        "atk": 99,
+        "def": 99,
+        "spAtk": 99,
+        "spDef": 99,
+        "spd": 99
+    },
+    "mon3": {
+        "name": "Squirts",
+        "type": "water",
+        "hp": 100,
+        "atk": 99,
+        "def": 99,
+        "spAtk": 99,
+        "spDef": 99,
+        "spd": 99
+    },
+    "mon4": {
+        "name": "Skink",
+        "type": "normal",
+        "hp": 100,
+        "atk": 99,
+        "def": 99,
+        "spAtk": 99,
+        "spDef": 99,
+        "spd": 99
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "normal": {
+        "name": "normal",
+        "multipliers": {}
+    },
+    "fire": {
+        "name": "fire",
+        "multipliers": {
+            "water": 0.5,
+            "grass": 1.5
+        }
+    },
+    "grass": {
+        "name": "grass",
+        "multipliers": {
+            "fire": 0.5,
+            "water": 1.5
+        }
+    },
+    "water": {
+        "name": "water",
+        "multipliers": {
+            "grass": 0.5,
+            "fire": 1.5
+        }
+    }
+}
