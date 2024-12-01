@@ -8,7 +8,7 @@
 
 class Type {
 	std::string ObjectType;
-	std::map<std::string, double> Multipliers;
+	std::map<std::string, double> Multipliers = {};
 
 public:
 	Type(std::string objectType, std::map<std::string, double> multipliers) {
@@ -30,6 +30,7 @@ public:
 		ObjectType = std::string(typeName);
 		Multipliers = m;
 	};
+
 
 	std::string getObjectType() const;
 	float getMultiplier(std::string t) const;

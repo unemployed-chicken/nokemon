@@ -40,14 +40,12 @@ public:
 		std::string_view stringViewMoveType = moveObject.find_field("type").get_string();
 		MoveType = AllTypes.at(std::string(stringViewMoveType));
 
-		//MoveType = Type();
-
 		Power = double(moveObject.find_field("power"));
 		Accuracy = double(moveObject.find_field("accuracy"));
 		double totalUses = double(moveObject.find_field("maxUses"));
 		MaxUses = totalUses;
 		Uses = totalUses;
-		HitCount = double(moveObject.find_field("hitCount").get_double());
+		HitCount = double(moveObject.find_field("hitCount"));
 	};
 
 	Move() {

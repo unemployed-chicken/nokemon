@@ -1,5 +1,5 @@
 {
-    "mon1": {
+    "mon01": {
         "name": "Bulbie",
         "type": "grass",
         "hp": 100,
@@ -9,7 +9,7 @@
         "spDef": 99,
         "spd": 99
     },
-    "mon2": {
+    "mon02": {
         "name": "Char",
         "type": "fire",
         "hp": 100,
@@ -19,7 +19,7 @@
         "spDef": 99,
         "spd": 99
     },
-    "mon3": {
+    "mon03": {
         "name": "Squirts",
         "type": "water",
         "hp": 100,
@@ -29,7 +29,7 @@
         "spDef": 99,
         "spd": 99
     },
-    "mon4": {
+    "mon04": {
         "name": "Skink",
         "type": "normal",
         "hp": 100,

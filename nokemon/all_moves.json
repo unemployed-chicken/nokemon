@@ -1,5 +1,5 @@
 {
-    "mv1": {
+    "mv01": {
         "name": "Bubble Beam",
         "type": "water",
         "power": 70,
@@ -7,7 +7,7 @@
         "maxUses": 15,
         "hitCount":  1
     },
-    "mv2": {
+    "mv02": {
         "name": "Flame Thrower",
         "type": "fire",
         "power": 70,
@@ -15,7 +15,7 @@
         "maxUses": 15,
         "hitCount": 1
     },
-    "mv3": {
+    "mv03": {
         "name": "Leaf Blade",
         "type": "grass",
         "power": 70,
@@ -23,7 +23,7 @@
         "maxUses": 15,
         "hitCount": 1
     },
-    "mv4": {
+    "mv04": {
         "name": "Tackle",
         "type": "normal",
         "power": 70,
@@ -31,7 +31,7 @@
         "maxUses": 15,
         "hitCount": 1
     },
-    "mv5": {
+    "mv05": {
         "name": "Bite",
         "type": "normal",
         "power": 70,
@@ -39,7 +39,7 @@
         "maxUses": 15,
         "hitCount": 1
     },
-    "mv6": {
+    "mv06": {
         "name": "Scratch",
         "type": "normal",
         "power": 70,

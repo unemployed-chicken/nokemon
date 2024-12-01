@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="globalVars.cpp" />
+    <ClCompile Include="monster.cpp" />
     <ClCompile Include="move.cpp" />
     <ClCompile Include="nokemon.cpp" />
     <ClCompile Include="simdjson.cpp" />
@@ -135,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="globalVars.h" />
+    <ClInclude Include="monster.h" />
     <ClInclude Include="simdjson.h" />
     <ClInclude Include="move.h" />
     <ClInclude Include="type.h" />
