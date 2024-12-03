@@ -1,5 +1,4 @@
 #include "globalVars.h"
-//#include "simdjson.h"
 
 std::map<std::string, Type> AllTypes = {};
 std::map<std::string, Move> AllMoves = {};
@@ -48,7 +47,26 @@ void generateAllMonsters(simdjson::ondemand::object object) {
 	for (auto field : object) {
 		std::string_view monsterIdentifier = field.unescaped_key();
 		simdjson::ondemand::object monsterValues = field.value();
-		Monster m = Monster(monsterValues, AllTypes);
+		Monster m = Monster(std::string(monsterIdentifier), monsterValues);
 		AllMonsters[std::string(monsterIdentifier)] = m;
+	}
+}
+
+void displayAllMoves() {
+	for (auto itr = AllMoves.begin(); itr != AllMoves.end(); ++itr) {
+		(*itr).second.displayMove();
+	}
+}
+
+void displayAllMonsters() {
+	for (auto itr = AllMonsters.begin(); itr != AllMonsters.end(); ++itr) {
+		(*itr).second.printMonster();
+	}
+}
+
+void displayAllMonstersWithMoves() {
+	for (auto itr = AllMonsters.begin(); itr != AllMonsters.end(); ++itr) {
+		(*itr).second.printMonster();
+		(*itr).second.printMoves();
 	}
 }

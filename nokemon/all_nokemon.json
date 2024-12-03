@@ -1,42 +1,55 @@
 {
-    "mon01": {
-        "name": "Bulbie",
+    "Bulbie": {
         "type": "grass",
         "hp": 100,
         "atk": 99,
         "def": 99,
         "spAtk": 99,
         "spDef": 99,
-        "spd": 99
+        "spd": 99,
+        "moves": [
+            "mv04",
+            "mv03"
+        ]
     },
-    "mon02": {
-        "name": "Char",
+    "Char": {
         "type": "fire",
         "hp": 100,
         "atk": 99,
         "def": 99,
         "spAtk": 99,
         "spDef": 99,
-        "spd": 99
+        "spd": 99,
+        "moves": [
+            "mv05",
+            "mv02"
+        ]
     },
-    "mon03": {
-        "name": "Squirts",
+    "Squirts": {
         "type": "water",
         "hp": 100,
         "atk": 99,
         "def": 99,
         "spAtk": 99,
         "spDef": 99,
-        "spd": 99
+        "spd": 99,
+        "moves": [
+            "mv06",
+            "mv01"
+        ]
     },
-    "mon04": {
-        "name": "Skink",
+    "Skink": {
         "type": "normal",
         "hp": 100,
         "atk": 99,
         "def": 99,
         "spAtk": 99,
         "spDef": 99,
-        "spd": 99
+        "spd": 99,
+        "moves": [
+            "mv04",
+            "mv05",
+            "mv06"
+        ]
     }
 }

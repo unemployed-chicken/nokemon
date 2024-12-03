@@ -1,12 +1,12 @@
 #include <iostream>
-//#include "helper.h"
 #include "type.h"
 #include "monster.h"
-//#include "consoleUtil.h"
+#include "consoleUtil.h"
 using std::string;
 
 
 void Monster::printMonster() {
+    printSpacerS();
     std::cout << "{ Name: " << Name << ", Type: " << MonsterType.getObjectType() << ", Attack: " << Atk << ", Defense: " << Def << ", Special Attack: " << SpAtk;
     std::cout << ", Special Defense: " << SpDef << ", Speed: " << Spd << ", Accuracy: " << Acc << ", Evasion: " << Evn << " }\n";
 }
@@ -16,7 +16,7 @@ void Monster::printMoves() {
     for (int i = 0; i < 4; ++i) {
         std::cout << "Move " << i + 1 << ":\n";
         moves[i].displayMove();
-        //printSpacerS();
+        printSpacerS();
     }
 }
 
@@ -51,6 +51,18 @@ void Monster::setMoveSlot(int slot, const Move& move) { // THIS NEEDS TO THROW A
         std::cout << "THERE WAS AN ERROR ASSIGNING THE MOVE " << move.getName() << " TO " << Name << ".\n";
     }
 }
+
+void Monster::setAllMoveSlots(const Move& one, const Move& two) {
+    MoveSlot1 = one;
+    MoveSlot2 = two;
+}
+
+void Monster::setAllMoveSlots(const Move& one, const Move& two, const Move& three) {
+    MoveSlot1 = one;
+    MoveSlot2 = two;
+    MoveSlot3 = three;
+}
+
 void Monster::setAllMoveSlots(const Move& one, const Move& two, const Move& three, const Move& four) {
     MoveSlot1 = one;
     MoveSlot2 = two;

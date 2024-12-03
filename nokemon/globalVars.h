@@ -6,6 +6,8 @@
 #include "move.h"
 #include "monster.h"
 
+class Monster;
+
 extern std::map<std::string, Type> AllTypes;
 extern std::map<std::string, Move> AllMoves;
 extern std::map<std::string, Monster> AllMonsters;
@@ -14,3 +16,8 @@ void generateAllTypesMovesMonsters();
 void generateAllTypes(simdjson::ondemand::object object);
 void generateAllMoves(simdjson::ondemand::object object);
 void generateAllMonsters(simdjson::ondemand::object object);
+
+void displayAllMoves();
+void displayAllMonsters();
+void displayAllMonstersWithMoves();
+Monster getRandomMonster();

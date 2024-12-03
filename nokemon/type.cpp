@@ -2,6 +2,7 @@
 #include <map>
 #include <vector>
 #include "type.h"
+#include "consoleUtil.h"
 using std::string;
 using std::map;
 using std::vector;
@@ -16,7 +17,7 @@ float Type::getMultiplier(string t) const {
 }
 
 void Type::displayType() {
-	std::cout << "----------\n";
+	printSpacerS();
 	std::cout << ObjectType << '\n';
 	for (auto itr = Multipliers.begin(); itr != Multipliers.end(); ++itr) {
 		std::cout << "Type: " << (*itr).first << " | multiplier: " << (*itr).second << '\n';

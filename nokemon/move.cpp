@@ -1,6 +1,7 @@
 #include <iostream>
 #include "move.h"
 #include "type.h"
+#include "consoleUtil.h"
 using std::string;
 using std::map;
 
@@ -17,9 +18,11 @@ double Move::getUses() const { return Uses; }
 void Move::decrementUsesByOne() { Uses--; }
 
 void Move::displayMove() {
+	printSpacerS();
 	std::cout << Name << ":\n\t";
 	std::cout << "Type: " << MoveType.getObjectType() << "\n\t";
 	std::cout << "Power: " << Power << " | Accuracy: " << Accuracy << "\n\t";
 	std::cout << "Move Counts: " << Uses << "/" << MaxUses << '\n';
+	printSpacerS();
 }
 

@@ -2,7 +2,13 @@
 #include <iostream>
 #include <vector>
 #include "move.h"
+#include "monster.h"
 #include "type.h"
+#include "globalVars.h"
+
+extern std::map<std::string, Type> AllTypes;
+extern std::map<std::string, Move> AllMoves;
+
 
 class Monster {
     std::string Name;
@@ -35,9 +41,8 @@ public:
         Spd = spd;
     }
 
-    Monster(simdjson::ondemand::object monsterObject, std::map<std::string, Type> AllTypes) {
-        std::string_view stringViewName = monsterObject.find_field("name").get_string();
-        Name = std::string(stringViewName);
+    Monster(std::string name, simdjson::ondemand::object monsterObject) {
+        Name = name;
 
         std::string_view stringViewMoveType = monsterObject.find_field("type").get_string();
         MonsterType = AllTypes.at(std::string(stringViewMoveType));
@@ -50,6 +55,13 @@ public:
         SpAtk = double(monsterObject.find_field("spAtk"));
         SpDef = double(monsterObject.find_field("spDef"));
         Spd = double(monsterObject.find_field("spd"));
+
+        int i = 0;
+        for (std::string_view move : monsterObject["moves"]) {
+            ++i;
+            Move mv = AllMoves.at(std::string(move));
+            setMoveSlot(i, mv);
+        }
     }
 
     Monster() {
@@ -81,5 +93,7 @@ public:
     double getAcc() const;
     double getEvn() const;
     void setMoveSlot(int slot, const Move& move);
+    void setAllMoveSlots(const Move& one, const Move& two);
+    void setAllMoveSlots(const Move& one, const Move& two, const Move& three);
     void setAllMoveSlots(const Move& one, const Move& two, const Move& three, const Move& four);
 };

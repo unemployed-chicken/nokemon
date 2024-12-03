@@ -127,18 +127,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="consoleUtil.cpp" />
     <ClCompile Include="globalVars.cpp" />
+    <ClCompile Include="helper.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="move.cpp" />
     <ClCompile Include="nokemon.cpp" />
     <ClCompile Include="simdjson.cpp" />
+    <ClCompile Include="trainer.cpp" />
     <ClCompile Include="type.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="consoleUtil.h" />
     <ClInclude Include="globalVars.h" />
+    <ClInclude Include="helper.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="simdjson.h" />
     <ClInclude Include="move.h" />
+    <ClInclude Include="trainer.h" />
     <ClInclude Include="type.h" />
   </ItemGroup>
   <ItemGroup>

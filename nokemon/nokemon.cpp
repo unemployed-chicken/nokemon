@@ -1,32 +1,40 @@
 #include <iostream>
-#include "simdjson.h"
-#include "move.h"
-#include "type.h"
+#include "consoleUtil.h"
 #include "globalVars.h"
+#include "helper.h"
+#include "move.h"
+#include "simdjson.h"
+#include "trainer.h"
+#include "type.h"
 
 /*
 * Look into setting AllTypes, AllMoves, AllMonsters as a constexpr < This wont work
 * for my implementation
-* 
-* Next Steps: 
-* - Create an array in all_nokemon for the moves of each nokemon
-* - Incorporate the moves in the automatic generation of these nokemon
-* 
 */
+
+const int partySize = 3;
+
+
 
 int main() {
 	generateAllTypesMovesMonsters();
 
-	for (auto itr = AllMoves.begin(); itr != AllMoves.end(); ++itr) {
-		(*itr).second.displayMove();
+	printToConsole("Welcome to the world of Not Pokemon, or Nokemon!");
+	Trainer p1 = generateTrainer(true);
+	Trainer p2 = generateTrainer();
+
+	srand(time(0));
+
+	for (int i = 0; i < partySize; ++i) {
+		p1.setMonster(promptUserPreferedMonster());
+		p2.setMonster(getRandomMonster());
 	}
 
-	std::cout << "-----------------------------------------------\n";
-
-	for (auto itr = AllMonsters.begin(); itr != AllMonsters.end(); ++itr) {
-		(*itr).second.printMonster();
-	}
+	p1.displayParty();
+	printSpacerL();
+	p2.displayParty();
 
 	std::cout << "done" << std::endl;
 }
+
 
