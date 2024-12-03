@@ -10,9 +10,8 @@ Trainer generateTrainer(bool isUser) {
 }
 
 Monster promptUserPreferedMonster() {
-	printSpacerL();
 	while (true) {
-		string userInput = promptUserInputString("Please type the name of the Nokemon you would like. (Type 'all' to get a list of all Nokemon");
+		string userInput = promptUserInputString("Please type the name of the Nokemon you would like. (Type 'all' to get a list of all Nokemon)");
 		if (userInput == "all" || userInput == "ALL" || userInput == "All") {
 			printSpacerL();
 			displayAllMonsters();
