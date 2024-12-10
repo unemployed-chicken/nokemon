@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 #include "move.h"
-#include "monster.h"
 #include "type.h"
 #include "globalVars.h"
 
@@ -96,4 +95,6 @@ public:
     void setAllMoveSlots(const Move& one, const Move& two);
     void setAllMoveSlots(const Move& one, const Move& two, const Move& three);
     void setAllMoveSlots(const Move& one, const Move& two, const Move& three, const Move& four);
+    
+    void attack(Monster& m, int damage);
 };

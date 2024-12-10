@@ -1,5 +1,4 @@
 #include <iostream>
-#include "type.h"
 #include "monster.h"
 #include "consoleUtil.h"
 using std::string;
@@ -69,3 +68,8 @@ void Monster::setAllMoveSlots(const Move& one, const Move& two, const Move& thre
     MoveSlot3 = three;
     MoveSlot4 = four;
 }
+
+void Monster::attack(Monster& m, int damage ) {
+    m.setCurrentHp(m.getCurrentHp() - damage);
+}
+

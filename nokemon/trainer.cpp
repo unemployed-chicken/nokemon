@@ -6,10 +6,10 @@ using std::string;
 
 // Getters and Setters
 string Trainer::getName() const { return Name; }
-Monster Trainer::getMonster(int i) const { return Monsters.at(i); }
+Monster& Trainer::getMonster(int i) { return Monsters.at(i); }
 int Trainer::getPartyCount() const { return Monsters.size(); }
 
-void Trainer::setMonster(Monster m, const int nokemonSlot) {
+void Trainer::setMonster(Monster& m, const int nokemonSlot) {
 	if (nokemonSlot < 0) {
 		return;
 	}

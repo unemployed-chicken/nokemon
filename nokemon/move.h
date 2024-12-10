@@ -12,6 +12,11 @@
 */ 
 //extern std::map<std::string, Type> AllTypes;
 
+enum AttackType {
+	PHYSICAL,
+	SPECIAL
+};
+
 
 class Move {
 	std::string Name;
@@ -21,11 +26,14 @@ class Move {
 	double MaxUses;
 	double Uses;
 	double HitCount;
+	AttackType AtkType;
+
 
 public:
-	Move(std::string name, Type movetype, double power, double accuracy, double maxuses, double hitcount = 1) {
+	Move(std::string name, Type movetype, double power, double accuracy, double maxuses, double hitcount = 1, std::string atkType = "physical") {
 		Name = name;
 		MoveType = movetype;
+		AtkType = attackTypeStringToEnum(atkType);
 		Power = power;
 		Accuracy = accuracy;
 		HitCount = hitcount;
@@ -40,6 +48,9 @@ public:
 		std::string_view stringViewMoveType = moveObject.find_field("type").get_string();
 		MoveType = AllTypes.at(std::string(stringViewMoveType));
 
+		std::string_view stringViewAtkType = moveObject.find_field("atkType").get_string();
+		AtkType = attackTypeStringToEnum(std::string(stringViewAtkType));
+
 		Power = double(moveObject.find_field("power"));
 		Accuracy = double(moveObject.find_field("accuracy"));
 		double totalUses = double(moveObject.find_field("maxUses"));
@@ -50,6 +61,7 @@ public:
 
 	Move() {
 		Name = "Empty";
+		AtkType = PHYSICAL;
 		Power = 0.0;
 		Accuracy = 0.0;
 		HitCount = 0;
@@ -66,5 +78,10 @@ public:
 	double getUses() const;
 	void decrementUsesByOne();
 	void displayMove();
+	// Why does this not see the method implementation
+	AttackType attackTypeStringToEnum(std::string atkType);
+	std::string attackTypeEnumToString(AttackType atkType);
 
+	double calculatePhysicalMovePower(const Move move);
+	double calculateSpecialMovePower(const Move move);
 };

@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="battle.cpp" />
     <ClCompile Include="consoleUtil.cpp" />
     <ClCompile Include="globalVars.cpp" />
     <ClCompile Include="helper.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="type.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="battle.h" />
     <ClInclude Include="consoleUtil.h" />
     <ClInclude Include="globalVars.h" />
     <ClInclude Include="helper.h" />

@@ -1,10 +1,8 @@
-#include <iostream>
 #include "move.h"
-#include "type.h"
 #include "consoleUtil.h"
+
 using std::string;
 using std::map;
-
 
 
 // Getters and Setters
@@ -21,8 +19,23 @@ void Move::displayMove() {
 	printSpacerS();
 	std::cout << Name << ":\n\t";
 	std::cout << "Type: " << MoveType.getObjectType() << "\n\t";
+	std::cout << "Attack Type: " << attackTypeEnumToString(AtkType) << "\n\t";
 	std::cout << "Power: " << Power << " | Accuracy: " << Accuracy << "\n\t";
 	std::cout << "Move Counts: " << Uses << "/" << MaxUses << '\n';
 	printSpacerS();
+}
+
+AttackType Move::attackTypeStringToEnum(string atkType) {
+	if (atkType == "special" || atkType == "Special" || atkType == "SPECIAL") {
+		return SPECIAL;
+	}
+	return PHYSICAL;
+}
+
+string Move::attackTypeEnumToString(AttackType atkType) {
+	if (atkType == SPECIAL) {
+		return "special";
+	}
+	return "physical";
 }
 

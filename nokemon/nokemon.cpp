@@ -14,8 +14,6 @@
 
 const int partySize = 3;
 
-
-
 int main() {
 	generateAllTypesMovesMonsters();
 
@@ -26,15 +24,20 @@ int main() {
 	srand(time(0));
 
 	for (int i = 0; i < partySize; ++i) {
-		p1.setMonster(promptUserPreferedMonster());
-		p2.setMonster(getRandomMonster());
+		Monster p1Monster = promptUserPreferedMonster();
+		p1.setMonster(p1Monster);
+		Monster p2Monster = getRandomMonster();
+		p2.setMonster(p2Monster);
 	}
 
 	p1.displayParty();
 	printSpacerL();
 	p2.displayParty();
 
+	printSpacerL();
+	p1.getMonster(0).attack(p2.getMonster(0), 5);
+
+	printSpacerL();
+	std::cout << "Current HP: " << p2.getMonster(0).getCurrentHp() << "\nMax HP: " << p2.getMonster(0).getMaxHp() << '\n';
 	std::cout << "done" << std::endl;
 }
-
-
