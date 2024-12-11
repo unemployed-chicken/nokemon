@@ -1,4 +1,5 @@
 #include <iostream>
+#include "battle.h"
 #include "consoleUtil.h"
 #include "globalVars.h"
 #include "helper.h"
@@ -30,7 +31,7 @@ int main() {
 		p2.setMonster(p2Monster);
 	}
 
-	p1.displayParty();
+	/*p1.displayParty();
 	printSpacerL();
 	p2.displayParty();
 
@@ -38,6 +39,9 @@ int main() {
 	p1.getMonster(0).attack(p2.getMonster(0), 5);
 
 	printSpacerL();
-	std::cout << "Current HP: " << p2.getMonster(0).getCurrentHp() << "\nMax HP: " << p2.getMonster(0).getMaxHp() << '\n';
+	std::cout << "Current HP: " << p2.getMonster(0).getCurrentHp() << "\nMax HP: " << p2.getMonster(0).getMaxHp() << '\n';*/
+	
+	Battle b = Battle(p1, p2);
+	b.startBattle();
 	std::cout << "done" << std::endl;
 }

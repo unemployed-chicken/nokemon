@@ -5,8 +5,8 @@
 
 class Trainer {
 	std::string Name;
-	std::vector<Monster> Monsters;
-
+	std::vector<Monster> Party;
+	int InactivePartyCount=0;
 
 public:
 	Trainer(std::string name) {
@@ -25,4 +25,6 @@ public:
 	int getIndexToReplace(const Monster& m);
 	void displayParty();
 	int requestNokemonIndexNumber();
+	int getInactivePartyCount() const;
+	void incrementInactivePartyCount();
 };
