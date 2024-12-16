@@ -5,3 +5,5 @@
 
 Trainer generateTrainer(bool isUser = false);
 Monster promptUserPreferedMonster();
+void displyBattleField(Monster playersMonster, Monster aisMonster);
+void displayActiveMonster(Monster m);

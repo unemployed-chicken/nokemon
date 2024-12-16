@@ -1,5 +1,6 @@
 #include "battle.h"
 #include "consoleUtil.h"
+#include "helper.h"
 
 Trainer Battle::startBattle() {
 	printToConsole("Let the battle begin!");
@@ -7,6 +8,7 @@ Trainer Battle::startBattle() {
 	bool AiIsActive = true;
 
 	while (playerIsActive && AiIsActive) {
+		// validates both parties have an active monster on the battle field.
 		if (PlayerActiveMonster.getName() == "NONE") {
 			setFirstActiveMonster();
 		}
@@ -16,9 +18,15 @@ Trainer Battle::startBattle() {
 			setAIActiveMonster(m);
 		}
 
+		// display battle field before player move choice
+		displyBattleField(PlayerActiveMonster, AIActiveMonster);
+
+		Move playerMove = getPlayersMove();
+		Move aiMove = getAiMove();
+
 		printSpacerL();
-		std::cout << "You are battling with " << PlayerActiveMonster.getName() << '\n';
-		std::cout << "Your opponent chose: " << AIActiveMonster.getName() << '\n';
+		std::cout << "Your move: " << playerMove.getName() << '\n';
+		std::cout << "Your opponent's move: " << aiMove.getName() << '\n';
 		break;
 	}
 	return Player;
@@ -82,4 +90,48 @@ void Battle::setPlayerActiveMonster(Monster& m) {
 
 void Battle::setAIActiveMonster(Monster& m) {
 	AIActiveMonster = m;
+}
+
+Move Battle::getPlayersMove() {
+	while (true) {
+		if (!PlayerActiveMonster.hasActiveMoves()) {
+			std::cout << PlayerActiveMonster.getName() << " is all out of moves. Using Struggle." << '\n';
+			return Move(std::string("struggle"), AllTypes.at("normal"), 10.0, 101.0, 1.0);
+		}
+
+		PlayerActiveMonster.printMovesForBattle();
+		printToConsole("What move should your Nokemon use? ");
+		int slot = promptUserInputInt("Select the number associated the move you would like to use.");
+		Move mv = PlayerActiveMonster.getMoveFromSlot(slot);
+		if (mv.moveNotEmpty() && mv.hasUsagesLeft()) {
+			return mv;
+		}
+		else if (!mv.moveNotEmpty()) {
+			printToConsole("Your monster doesn't have a move assigned to that slot.");
+		}
+		else if (!mv.hasUsagesLeft()) {
+			std::cout << PlayerActiveMonster.getName() << " has no moves left for " << mv.getName() << ".\n";
+		}
+	}
+}
+
+// There is an unidentified bug here. This crashed once during testing
+// The bug may have been that I "rand() % 4" and not "rand() % x"
+Move Battle::getAiMove() {
+	srand(time(0));
+	int x = 4;
+	while (x > 0) {
+		// Checks monster for Active Moves
+		if (!AIActiveMonster.hasActiveMoves()) {
+			return Move(std::string("struggle"), AllTypes.at("normal"), 10.0, 101.0, 1.0);
+		}
+		int slot = (rand() % x) + 1;
+		Move mv = AIActiveMonster.getMoveFromSlot(slot);
+		if (mv.moveNotEmpty() && mv.hasUsagesLeft()) {
+			return mv;
+		}
+		else if (!mv.moveNotEmpty()) {
+			--x;
+		}
+	}
 }

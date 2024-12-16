@@ -54,7 +54,7 @@ void generateAllMonsters(simdjson::ondemand::object object) {
 
 void displayAllMoves() {
 	for (auto itr = AllMoves.begin(); itr != AllMoves.end(); ++itr) {
-		(*itr).second.displayMove();
+		(*itr).second.displayMoveDetailed();
 	}
 }
 
@@ -67,6 +67,6 @@ void displayAllMonsters() {
 void displayAllMonstersWithMoves() {
 	for (auto itr = AllMonsters.begin(); itr != AllMonsters.end(); ++itr) {
 		(*itr).second.printMonster();
-		(*itr).second.printMoves();
+		(*itr).second.printMovesDetailed();
 	}
 }

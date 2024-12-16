@@ -74,6 +74,9 @@
     <ClInclude Include="battle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="battleHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="all_nokemon.json">

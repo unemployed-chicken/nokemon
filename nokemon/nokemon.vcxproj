@@ -142,6 +142,7 @@
     <ClInclude Include="battle.h" />
     <ClInclude Include="consoleUtil.h" />
     <ClInclude Include="globalVars.h" />
+    <ClInclude Include="battleHelper.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="monster.h" />
     <ClInclude Include="simdjson.h" />

@@ -77,7 +77,11 @@ public:
 	double getHitCount() const;
 	double getUses() const;
 	void decrementUsesByOne();
-	void displayMove();
+	bool moveNotEmpty();
+	bool hasUsagesLeft();
+	void displayMoveDetailed();
+	void displayMoveForBattle();
+
 	// Why does this not see the method implementation
 	AttackType attackTypeStringToEnum(std::string atkType);
 	std::string attackTypeEnumToString(AttackType atkType);

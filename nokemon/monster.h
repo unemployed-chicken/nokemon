@@ -76,7 +76,10 @@ public:
     }
 
     void printMonster();
-    void printMoves();
+    void printMovesDetailed();
+    void printMovesForBattle();
+    void attack(Monster& m, int damage);
+    bool hasActiveMoves();
 
     // Getters and Setters
     Type getMonsterType() const;
@@ -92,9 +95,8 @@ public:
     double getAcc() const;
     double getEvn() const;
     void setMoveSlot(int slot, const Move& move);
+    Move getMoveFromSlot(int slot);
     void setAllMoveSlots(const Move& one, const Move& two);
     void setAllMoveSlots(const Move& one, const Move& two, const Move& three);
     void setAllMoveSlots(const Move& one, const Move& two, const Move& three, const Move& four);
-    
-    void attack(Monster& m, int damage);
 };

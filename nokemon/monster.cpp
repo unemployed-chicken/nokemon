@@ -10,15 +10,22 @@ void Monster::printMonster() {
     std::cout << ", Special Defense: " << SpDef << ", Speed: " << Spd << ", Accuracy: " << Acc << ", Evasion: " << Evn << " }\n";
 }
 
-void Monster::printMoves() {
+void Monster::printMovesDetailed() {
     Move moves[] = { MoveSlot1, MoveSlot2, MoveSlot3, MoveSlot4 };
     for (int i = 0; i < 4; ++i) {
         std::cout << "Move " << i + 1 << ":\n";
-        moves[i].displayMove();
-        printSpacerS();
+        moves[i].displayMoveDetailed();
+        //printSpacerS(); 
     }
 }
 
+void Monster::printMovesForBattle() {
+    Move moves[] = { MoveSlot1, MoveSlot2, MoveSlot3, MoveSlot4 };
+    for (int i = 0; i < 4; ++i) {
+        std::cout << "Move " << i + 1 << ":\n";
+        moves[i].displayMoveForBattle();
+    }
+}
 
 Type Monster::getMonsterType() const { return MonsterType; }
 string Monster::getName() const { return Name; }
@@ -51,6 +58,22 @@ void Monster::setMoveSlot(int slot, const Move& move) { // THIS NEEDS TO THROW A
     }
 }
 
+Move Monster::getMoveFromSlot(int slot) {
+    switch (slot) {
+    case (1):
+        return MoveSlot1;
+    case (2):
+        return MoveSlot2;
+    case (3):
+        return MoveSlot3;
+    case (4):
+        return MoveSlot4;
+    default:
+        return Move();
+    }
+
+}
+
 void Monster::setAllMoveSlots(const Move& one, const Move& two) {
     MoveSlot1 = one;
     MoveSlot2 = two;
@@ -71,5 +94,9 @@ void Monster::setAllMoveSlots(const Move& one, const Move& two, const Move& thre
 
 void Monster::attack(Monster& m, int damage ) {
     m.setCurrentHp(m.getCurrentHp() - damage);
+}
+
+bool Monster::hasActiveMoves() {
+    return MoveSlot1.hasUsagesLeft() || MoveSlot2.hasUsagesLeft() || MoveSlot3.hasUsagesLeft() || MoveSlot4.hasUsagesLeft();
 }
 

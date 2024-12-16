@@ -42,3 +42,17 @@ Monster getRandomMonster() {
 	}
 	//return m;
 }
+
+void displyBattleField(Monster playersMonster, Monster aisMonster) {
+	printSpacerL();
+	displayActiveMonster(aisMonster);
+	printSpacerS();
+	printSpacerS();
+	displayActiveMonster(playersMonster);
+	printSpacerL();
+}
+
+
+void displayActiveMonster(Monster m) {
+	std::cout << m.getName() << "\t\t\tHP: " << m.getCurrentHp() << "/" << m.getMaxHp() << '\n';
+}

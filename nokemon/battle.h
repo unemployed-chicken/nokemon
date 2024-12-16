@@ -1,4 +1,5 @@
 #pragma once
+#include "move.h"
 #include "type.h"
 #include "trainer.h"
 
@@ -15,6 +16,8 @@ class Battle {
 	void setAIActiveMonster(Monster& m);
 	Monster getPlayerActiveMonster();
 	Monster getAiActiveMonster();
+	Move getPlayersMove();
+	Move getAiMove();
 
 public:
 	Battle(Trainer& player, Trainer& ai) {

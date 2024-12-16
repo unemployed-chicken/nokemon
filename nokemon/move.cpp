@@ -15,12 +15,18 @@ double Move::getMaxUses() const { return MaxUses; }
 double Move::getUses() const { return Uses; }
 void Move::decrementUsesByOne() { Uses--; }
 
-void Move::displayMove() {
+void Move::displayMoveDetailed() {
 	printSpacerS();
 	std::cout << Name << ":\n\t";
 	std::cout << "Type: " << MoveType.getObjectType() << "\n\t";
 	std::cout << "Attack Type: " << attackTypeEnumToString(AtkType) << "\n\t";
 	std::cout << "Power: " << Power << " | Accuracy: " << Accuracy << "\n\t";
+	std::cout << "Move Counts: " << Uses << "/" << MaxUses << '\n';
+	printSpacerS();
+}
+
+void Move::displayMoveForBattle() {
+	std::cout << Name << ":\t" << "Type: " << MoveType.getObjectType() << '\t';
 	std::cout << "Move Counts: " << Uses << "/" << MaxUses << '\n';
 	printSpacerS();
 }
@@ -39,3 +45,16 @@ string Move::attackTypeEnumToString(AttackType atkType) {
 	return "physical";
 }
 
+bool Move::moveNotEmpty() {
+	if (Name == "Empty") {
+		return false;
+	}
+	return true;
+}
+
+bool Move::hasUsagesLeft() {
+	if (Uses <= 0) {
+		return false;
+	}
+	return true;
+}
