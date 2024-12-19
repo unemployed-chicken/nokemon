@@ -1,12 +1,21 @@
 {
+    "struggle": {
+        "name": "Struggle",
+        "type": "normal",
+        "atkType": "physical",
+        "power": 10,
+        "accuracy": 101,
+        "maxUses": 1,
+        "hitCount": 1
+    },
     "mv01": {
         "name": "Bubble Beam",
         "type": "water",
-        "atkType":  "special",
+        "atkType": "special",
         "power": 70,
         "accuracy": 100,
         "maxUses": 15,
-        "hitCount":  1
+        "hitCount": 1
     },
     "mv02": {
         "name": "Flame Thrower",

@@ -51,3 +51,7 @@ int Trainer::requestNokemonIndexNumber() {
 	displayParty();
 	return promptUserInputInt("Type the number next to the pokemon you would like to select. Type -1 to cancel.");
 }
+
+bool Trainer::isTrainerActive() {
+	return InactivePartyCount < Party.size();
+}

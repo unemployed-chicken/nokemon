@@ -87,6 +87,7 @@ public:
     double getMaxHp() const;
     double getCurrentHp() const;
     void setCurrentHp(const double health);
+    void takeDamage(const double damage);
     double getAtk() const;
     double getDef() const;
     double getSpAtk() const;
@@ -96,7 +97,7 @@ public:
     double getEvn() const;
     bool hasHealth();
     void setMoveSlot(int slot, const Move& move);
-    Move getMoveFromSlot(int slot);
+    Move& getMoveFromSlot(int slot);
     void setAllMoveSlots(const Move& one, const Move& two);
     void setAllMoveSlots(const Move& one, const Move& two, const Move& three);
     void setAllMoveSlots(const Move& one, const Move& two, const Move& three, const Move& four);

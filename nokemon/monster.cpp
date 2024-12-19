@@ -3,6 +3,7 @@
 #include "consoleUtil.h"
 using std::string;
 
+Move defaultMove = Move();
 
 void Monster::printMonster() {
     printSpacerS();
@@ -46,6 +47,7 @@ double Monster::getSpDef() const { return SpDef; }
 double Monster::getSpd() const { return Spd; }
 double Monster::getAcc() const { return Acc; }
 double Monster::getEvn() const { return Evn; }
+void Monster::takeDamage(const double damage) { CurrentHp = CurrentHp - damage; }
 void Monster::setMoveSlot(int slot, const Move& move) { // THIS NEEDS TO THROW AN ERROR IF SLOT IS NOT 1-4
     switch (slot) {
     case (1):
@@ -65,7 +67,7 @@ void Monster::setMoveSlot(int slot, const Move& move) { // THIS NEEDS TO THROW A
     }
 }
 
-Move Monster::getMoveFromSlot(int slot) {
+Move& Monster::getMoveFromSlot(int slot) {
     switch (slot) {
     case (1):
         return MoveSlot1;
@@ -76,7 +78,7 @@ Move Monster::getMoveFromSlot(int slot) {
     case (4):
         return MoveSlot4;
     default:
-        return Move();
+        return defaultMove;
     }
 
 }

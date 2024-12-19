@@ -8,20 +8,21 @@ class Battle {
 	Trainer AI;
 	Monster PlayerActiveMonster;
 	Monster AIActiveMonster;
+	bool playerIsActive = true;
+	bool AiIsActive = true;
 
 	int calculateDamage(double atk, double def, double movePower, double atkTypeMultiplier, double defTypeMultiplier, int crit, double random, int level = 10);
-	bool isTrainerActive(Trainer t);
 	void setFirstActiveMonster();
 	void setPlayerActiveMonster(Monster& m);
 	void setAIActiveMonster(Monster& m);
 	Monster getPlayerActiveMonster();
 	Monster getAiActiveMonster();
-	Move getPlayersMove();
-	Move getAiMove();
-	void attackPhase(std::tuple<Monster&, Move> first, std::tuple<Monster&, Move> second);
-	void monsterAttack(std::tuple<Monster&, Move> attacker, Monster& defender);
-	void attackSpecial(std::tuple<Monster&, Move> attacker, Monster& defender);
-	void attackPhysical(std::tuple<Monster&, Move> attacker, Monster& defender);
+	Move& getPlayersMove();
+	Move& getAiMove();
+	void attackPhase(std::tuple<Monster&, Move&> first, std::tuple<Monster&, Move&> second);
+	void monsterAttack(std::tuple<Monster&, Move&> attacker, Monster& defender);
+	void attackSpecial(std::tuple<Monster&, Move&> attacker, Monster& defender);
+	void attackPhysical(std::tuple<Monster&, Move&> attacker, Monster& defender);
 	double calculateCritValue();
 	double calculateRandomDamageModifier();
 	double calculateAtkTypeMultiplier(Monster attacker, Move attack);

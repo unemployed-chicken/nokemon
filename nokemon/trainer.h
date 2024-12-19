@@ -27,4 +27,5 @@ public:
 	int requestNokemonIndexNumber();
 	int getInactivePartyCount() const;
 	void incrementInactivePartyCount();
+	bool isTrainerActive();
 };

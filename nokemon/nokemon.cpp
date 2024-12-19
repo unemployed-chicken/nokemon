@@ -13,7 +13,7 @@
 * for my implementation
 */
 
-const int partySize = 3;
+const int partySize = 2;
 
 int main() {
 	generateAllTypesMovesMonsters();
@@ -31,17 +31,13 @@ int main() {
 		p2.setMonster(p2Monster);
 	}
 
-	/*p1.displayParty();
-	printSpacerL();
-	p2.displayParty();
-
-	printSpacerL();
-	p1.getMonster(0).attack(p2.getMonster(0), 5);
-
-	printSpacerL();
-	std::cout << "Current HP: " << p2.getMonster(0).getCurrentHp() << "\nMax HP: " << p2.getMonster(0).getMaxHp() << '\n';*/
-	
 	Battle b = Battle(p1, p2);
-	b.startBattle();
+	Trainer winner = b.startBattle();
+	if (winner.getName() != p2.getName()) {
+		printToConsole("CONGRATS! YOU WON!!!!!");
+	}
+	else {
+		printToConsole("Sorry, You lost. Better luck next time. =(");
+	}
 	std::cout << "done" << std::endl;
 }
