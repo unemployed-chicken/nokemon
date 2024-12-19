@@ -27,6 +27,13 @@ void Monster::printMovesForBattle() {
     }
 }
 
+bool Monster::hasHealth() {
+    if (CurrentHp <= 0) {
+        return false;
+    }
+    return true;
+}
+
 Type Monster::getMonsterType() const { return MonsterType; }
 string Monster::getName() const { return Name; }
 double Monster::getMaxHp() const { return MaxHp; }

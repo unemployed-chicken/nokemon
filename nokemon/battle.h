@@ -18,6 +18,14 @@ class Battle {
 	Monster getAiActiveMonster();
 	Move getPlayersMove();
 	Move getAiMove();
+	void attackPhase(std::tuple<Monster&, Move> first, std::tuple<Monster&, Move> second);
+	void monsterAttack(std::tuple<Monster&, Move> attacker, Monster& defender);
+	void attackSpecial(std::tuple<Monster&, Move> attacker, Monster& defender);
+	void attackPhysical(std::tuple<Monster&, Move> attacker, Monster& defender);
+	double calculateCritValue();
+	double calculateRandomDamageModifier();
+	double calculateAtkTypeMultiplier(Monster attacker, Move attack);
+	double calculateDefTypeMultiplier(Monster defender, Move attack);
 
 public:
 	Battle(Trainer& player, Trainer& ai) {

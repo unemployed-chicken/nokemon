@@ -72,6 +72,7 @@ public:
 	std::string getName() const;
 	double getMaxUses() const;
 	Type getMoveType() const;
+	AttackType getAtkType() const;
 	double getPower() const;
 	double getAccuracy() const;
 	double getHitCount() const;
@@ -82,10 +83,6 @@ public:
 	void displayMoveDetailed();
 	void displayMoveForBattle();
 
-	// Why does this not see the method implementation
 	AttackType attackTypeStringToEnum(std::string atkType);
 	std::string attackTypeEnumToString(AttackType atkType);
-
-	double calculatePhysicalMovePower(const Move move);
-	double calculateSpecialMovePower(const Move move);
 };

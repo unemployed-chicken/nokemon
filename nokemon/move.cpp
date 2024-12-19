@@ -13,6 +13,7 @@ double Move::getAccuracy() const { return Accuracy; }
 double Move::getHitCount() const { return HitCount; }
 double Move::getMaxUses() const { return MaxUses; }
 double Move::getUses() const { return Uses; }
+AttackType Move::getAtkType() const { return AtkType; }
 void Move::decrementUsesByOne() { Uses--; }
 
 void Move::displayMoveDetailed() {

@@ -94,6 +94,7 @@ public:
     double getSpd() const;
     double getAcc() const;
     double getEvn() const;
+    bool hasHealth();
     void setMoveSlot(int slot, const Move& move);
     Move getMoveFromSlot(int slot);
     void setAllMoveSlots(const Move& one, const Move& two);

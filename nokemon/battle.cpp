@@ -1,6 +1,9 @@
 #include "battle.h"
 #include "consoleUtil.h"
 #include "helper.h"
+using std::tuple;
+using std::make_tuple;
+using std::get;
 
 Trainer Battle::startBattle() {
 	printToConsole("Let the battle begin!");
@@ -11,6 +14,7 @@ Trainer Battle::startBattle() {
 		// validates both parties have an active monster on the battle field.
 		if (PlayerActiveMonster.getName() == "NONE") {
 			setFirstActiveMonster();
+			
 		}
 
 		if (AIActiveMonster.getName() == "NONE") {
@@ -21,12 +25,21 @@ Trainer Battle::startBattle() {
 		// display battle field before player move choice
 		displyBattleField(PlayerActiveMonster, AIActiveMonster);
 
-		Move playerMove = getPlayersMove();
-		Move aiMove = getAiMove();
+		tuple <Monster&, Move> playerMove(PlayerActiveMonster, getPlayersMove());
+		tuple <Monster&, Move> aiMove(PlayerActiveMonster, getAiMove());
+		 
+		// Begin attack phase
+		if (PlayerActiveMonster.getSpd() >= AIActiveMonster.getSpd()) {
+			
+			attackPhase(playerMove, aiMove);
+		}
+		else {
+			attackPhase(aiMove, playerMove);
+		}
 
 		printSpacerL();
-		std::cout << "Your move: " << playerMove.getName() << '\n';
-		std::cout << "Your opponent's move: " << aiMove.getName() << '\n';
+		std::cout << "Your move: " << get<1>(playerMove).getName() << '\n';
+		std::cout << "Your opponent's move: " << get<1>(aiMove).getName() << '\n';
 		break;
 	}
 	return Player;
@@ -90,6 +103,141 @@ void Battle::setPlayerActiveMonster(Monster& m) {
 
 void Battle::setAIActiveMonster(Monster& m) {
 	AIActiveMonster = m;
+}
+
+void Battle::attackPhase(std::tuple<Monster&, Move> first, std::tuple<Monster&, Move> second) {
+	// First monster move
+	monsterAttack(first, get<0>(second));
+	// Second Monster move
+	if (get<0>(second).hasHealth()) {
+		monsterAttack(second, get<0>(first));
+	}
+}
+
+void Battle::monsterAttack(std::tuple<Monster&, Move> attacker, Monster& defender) {
+	if (get<1>(attacker).getAtkType() == get<1>(attacker).attackTypeStringToEnum("Special")) {
+		attackSpecial(attacker, defender);
+	}
+	else {
+		attackPhysical(attacker, defender);
+	}
+}
+
+void Battle::attackSpecial(std::tuple<Monster&, Move> attacker, Monster& defender) {
+	Monster atkM = get<0>(attacker);
+	Move attack = get<1>(attacker);
+	int damage = calculateDamage(
+		atkM.getSpAtk(), defender.getSpDef(), attack.getPower(), calculateAtkTypeMultiplier(atkM, attack), 
+		calculateDefTypeMultiplier(defender, attack), calculateCritValue(), calculateRandomDamageModifier()
+	);
+
+	// Below To Be Removed
+	printSpacerS();
+	std::cout << "Damage Calculated is: " << damage << '\n';
+	printSpacerS();
+	// Above to be Removed
+	// 
+	// do something with damage
+}
+
+
+void Battle::attackPhysical(std::tuple<Monster&, Move> attacker, Monster& defender) {
+	Monster atkM = get<0>(attacker);
+	Move attack = get<1>(attacker);
+	int damage = calculateDamage(
+		atkM.getAtk(), defender.getDef(), attack.getPower(), calculateAtkTypeMultiplier(atkM, attack),
+		calculateDefTypeMultiplier(defender, attack), calculateCritValue(), calculateRandomDamageModifier()
+	);
+
+	// Below To Be Removed
+	printSpacerS();
+	std::cout << "Damage Calculated is: " << damage << '\n';
+	printSpacerS();
+	// Above to be Removed
+	// 
+	// do something with damage
+}
+
+
+double Battle::calculateCritValue() {
+	printSpacerS();
+	int random = rand();
+	std::cout << "Critical Random Value was: " << random << '\n';
+	
+	double x = random % 10;
+	std::cout << "Critical value should be between 0 and 9: " << x << '\n';
+	
+	if (x == 9) {
+		printToConsole("It was a critical hit!");
+		return 2.0;
+	}
+
+	// Below To Be Removed
+	std::cout << "Crit value is 1" << '\n';
+	printSpacerS();
+	// Above to be Removed
+	return 1.0;
+}
+
+double Battle::calculateRandomDamageModifier() {
+	printSpacerS();
+	int random = rand() % 16;
+	std::cout << "RandomDamage Modulo Random Value was: " << random << '\n';
+
+	double x =  (random + 85.0) / 100.0;
+
+	// Below To Be Removed
+	printSpacerS();
+	std::cout << "Random value should be between .85 and 1.0: " << x << '\n';
+	printSpacerS();
+	// Above to be Removed
+
+	return x;
+}
+
+
+double Battle::calculateAtkTypeMultiplier(Monster attacker, Move attack) {
+	if (attacker.getMonsterType().getObjectType() == attack.getMoveType().getObjectType()) {
+		printSpacerS();
+		std::cout << "The Attacking Monster is using a powerful move!" << '\n';
+		printSpacerS();
+		return 1.5;
+	}
+	else if (attack.getMoveType().getMultiplier(attacker.getMonsterType().getObjectType()) > 1) {
+		printSpacerS();
+		std::cout << "The Attacking Monster is using a weak move..." << '\n';
+		printSpacerS();
+		return .5;
+	}
+	printSpacerS();
+	std::cout << "The Attacking Monster is using a neutral move." << '\n';
+	printSpacerS();
+	return 1.0;
+}
+
+double Battle::calculateDefTypeMultiplier(Monster defender, Move attack) {
+	double x = attack.getMoveType().getMultiplier(defender.getMonsterType().getObjectType());
+	if (x < 1) {
+		printSpacerS();
+		std::cout << "The attack wasn't very effective..." << '\n';
+		printSpacerS();
+	}
+	else if (x == 1) {
+		printSpacerS();
+		std::cout << "The attack was neutral effective." << '\n';
+		printSpacerS();
+	}
+	else if (x > 1) {
+		printSpacerS();
+		std::cout << "The attack was super effective!" << '\n';
+		printSpacerS();
+	}
+	else {
+		printSpacerS();
+		std::cout << "Something went wrong calculating the defType Multiplier." << '\n';
+		printSpacerS();
+	}
+	return x;
 }
 
 Move Battle::getPlayersMove() {
