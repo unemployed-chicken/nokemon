@@ -10,9 +10,19 @@ using std::get;
 /* To add:
 *    Perform a check to make sure Opponents fainted monsters are for sure fainted.
 *    Switch out Logic
+*    Make the battle display pause more intuitively
+*
 */
 
-Monster defaultMonster = Monster();
+/*
+* Nice to Haves:
+*    Change up print to console to receive a string for the sentence and a string for the object to insert
+*    Display only moves that exist, rather than all move slots
+*    Create more Nokemon and adjust stats to not be generic
+*    Create More Moves
+*    Fix display to prevent a Nokemon's HP from going negative (aka: if hp - x < 0, set to 0)
+*/
+
 
 Trainer Battle::startBattle() {
 	printToConsole("Let the battle begin!");
@@ -93,7 +103,6 @@ Monster* Battle::getPlayerActiveMonster() {
 		int chosenNokemon = (*Player).requestNokemonIndexNumber();
 		if (chosenNokemon == -1) {
 			return nullptr;
-			//return &defaultMonster;
 		}
 		
 		--chosenNokemon;
