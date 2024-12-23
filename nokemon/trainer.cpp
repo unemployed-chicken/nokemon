@@ -55,3 +55,7 @@ int Trainer::requestNokemonIndexNumber() {
 bool Trainer::isTrainerActive() {
 	return InactivePartyCount < Party.size();
 }
+
+void Trainer::setName(std::string name) {
+	Name = name;
+}

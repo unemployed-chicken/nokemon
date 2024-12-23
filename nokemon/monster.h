@@ -19,8 +19,8 @@ class Monster {
     double SpAtk;
     double SpDef;
     double Spd;
-    double Acc = 1;
-    double Evn = 1;
+    double Acc = 100.0;
+    double Evn = 0.0;
     Move MoveSlot1;
     Move MoveSlot2;
     Move MoveSlot3;

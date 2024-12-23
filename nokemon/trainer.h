@@ -28,4 +28,7 @@ public:
 	int getInactivePartyCount() const;
 	void incrementInactivePartyCount();
 	bool isTrainerActive();
+
+	// For testing purposes
+	void setName(std::string name);
 };
