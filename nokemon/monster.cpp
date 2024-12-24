@@ -16,7 +16,6 @@ void Monster::printMovesDetailed() {
     for (int i = 0; i < 4; ++i) {
         std::cout << "Move " << i + 1 << ":\n";
         moves[i].displayMoveDetailed();
-        //printSpacerS(); 
     }
 }
 
@@ -47,7 +46,14 @@ double Monster::getSpDef() const { return SpDef; }
 double Monster::getSpd() const { return Spd; }
 double Monster::getAcc() const { return Acc; }
 double Monster::getEvn() const { return Evn; }
-void Monster::takeDamage(const double damage) { CurrentHp = CurrentHp - damage; }
+
+void Monster::takeDamage(const double damage) { 
+    CurrentHp = CurrentHp - damage; 
+    if (CurrentHp < 0) {
+        CurrentHp = 0;
+    }
+}
+
 void Monster::setMoveSlot(int slot, const Move& move) { // THIS NEEDS TO THROW AN ERROR IF SLOT IS NOT 1-4
     switch (slot) {
     case (1):

@@ -8,8 +8,6 @@ using std::make_tuple;
 using std::get;
 
 /* To add:
-*    Perform a check to make sure Opponents fainted monsters are for sure fainted.
-*    Switch out Logic
 *    Make the battle display pause more intuitively
 *
 */
@@ -21,6 +19,7 @@ using std::get;
 *    Create more Nokemon and adjust stats to not be generic
 *    Create More Moves
 *    Fix display to prevent a Nokemon's HP from going negative (aka: if hp - x < 0, set to 0)
+*    Make choosing Monster at beginning not case dependent
 */
 
 
@@ -29,29 +28,25 @@ Trainer Battle::startBattle() {
 
 	while (playerIsActive && AiIsActive) {
 		// ---- validates both parties have an active monster on the battle field ----
-		if (activeMonsterEmpty(PlayerActiveMonster) || (*PlayerActiveMonster).getCurrentHp() <= 0) { // This will start as null pointer?
-			setFirstActiveMonster();
-			std::cout << "Go " << (*PlayerActiveMonster).getName() << "!\n";
-		}
+		if (monsterEmpty(PlayerActiveMonster) || (*PlayerActiveMonster).getCurrentHp() <= 0) {
+			playerChoosesMonsterToBattle();
+;		}
 
-		if (activeMonsterEmpty(AIActiveMonster) || (*AIActiveMonster).getCurrentHp() <= 0) { // This will start as null pointer?
+		if (monsterEmpty(AIActiveMonster) || (*AIActiveMonster).getCurrentHp() <= 0) {
+			(*AI).displayParty();
 			Monster* m = getAiActiveMonster();
 			setAIActiveMonster(m);
-			std::cout << "Your opponent chose " << (*AIActiveMonster).getName() << ".\n";
 			printToConsole("FIGHT!!!!\n");
 		}
 
 		// ---- display battle field before player move choice ----
 		displyBattleField( (*PlayerActiveMonster), (*AIActiveMonster));
 
-		Move& playerMoveChoice = getPlayersMove();
-		Move& aiMoveChoice = getAiMove();
+		tuple <Monster&, Move*> playerMove((*PlayerActiveMonster), playerChoosesBattleAction());
+		tuple <Monster&, Move*> aiMove( (*AIActiveMonster), getAiMove());
 
-		tuple <Monster&, Move&> playerMove((*PlayerActiveMonster), playerMoveChoice); // Does this need to store a pointer 
-		tuple <Monster&, Move&> aiMove( (*AIActiveMonster), aiMoveChoice); // Does this need to store a pointer
-		 
 		// ---- Begin attack phase ----
-		if ( (*PlayerActiveMonster).getSpd() >=  (*AIActiveMonster).getSpd()) {
+		if ((*PlayerActiveMonster).getSpd() >= (*AIActiveMonster).getSpd() || moveEmpty(get<1>(playerMove))) {
 			attackPhase(playerMove, aiMove);
 		}
 		else {
@@ -86,17 +81,8 @@ int Battle::calculateDamage(double atk, double def, double movePower, double atk
 	return std::ceil(damage);
 }
 
-void Battle::setFirstActiveMonster() {
-	while (true) {
-		Monster* m = getPlayerActiveMonster(); // What happens if this returns null
-		if (m) { // This will probably need to change
-			return setPlayerActiveMonster(m); 
-		} 
-		printToConsole("You must select a Nokemon to start the battle.");
-	}
-}
 
-Monster* Battle::getPlayerActiveMonster() { 
+Monster* Battle::playerChooseMonster() {
 	printSpacerS();
 	while (true) {
 		printToConsole("Choose a Nokemon to battle!");
@@ -108,10 +94,16 @@ Monster* Battle::getPlayerActiveMonster() {
 		--chosenNokemon;
 		if (chosenNokemon >= 0 && chosenNokemon < (*Player).getPartyCount()) {
 			Monster* chosen = &(*Player).getMonster(chosenNokemon);
-			if ((*chosen).getCurrentHp() > 0) {
+			if ((*chosen).getCurrentHp() <= 0) {
+				printToConsole("The chosen Nokemon is fainted. Please choose another.");
+			}
+			else if (selectedMonsterAlreadyActive(chosen)) {
+				printToConsole("That Nokemon is already on the field. Please choose another.");
+			}
+			else {
 				return chosen;
 			}
-			printToConsole("The chosen Nokemon is fainted. Please choose another.");
+			
 		}
 		else {
 			printToConsole("You do not have a Nokemon in that slot. Please pick again.");
@@ -121,38 +113,56 @@ Monster* Battle::getPlayerActiveMonster() {
 
 Monster* Battle::getAiActiveMonster() {
 	srand(time(0));
-	int i = rand() % (*AI).getPartyCount();
-	return &(*AI).getMonster(i);
+	while (true) {
+		int i = rand() % (*AI).getPartyCount();
+		Monster* m = &(*AI).getMonster(i);
+		/*
+		*  Note: 
+		*    the check if empty and monster shouldn't be needed as i is determined by getting party count
+		*    is already active should not be necessary as this is only being called when replacing a fainted nokemon. The has health check will cover this
+		*    Including both as an unneccesary precaution
+		*/ 
+		if (!monsterEmpty(m) && !selectedMonsterAlreadyActive(m) && (*m).hasHealth()) { 
+			return m;
+		}
+	}
 }
 
 void Battle::setPlayerActiveMonster(Monster* m) {
-	PlayerActiveMonster = m;
+	if (!monsterEmpty(m)) {
+		PlayerActiveMonster = m;
+		std::cout << "GO " << (*m).getName() << "!\n";
+	}
+	
 }
 
 void Battle::setAIActiveMonster(Monster* m) {
 	AIActiveMonster = m;
 }
 
-void Battle::attackPhase(std::tuple<Monster&, Move&> first, std::tuple<Monster&, Move&> second) { // Does this need to pass a pointer monster?
+void Battle::attackPhase(std::tuple<Monster&, Move*> first, std::tuple<Monster&, Move*> second) { // Does this need to pass a pointer monster?
 	// First monster move
-	monsterAttack(first, get<0>(second));
+	if (!moveEmpty(get<1>(first))) {
+		monsterAttack(first, get<0>(second));
+	}
 	
 	// Second Monster move
-	if (get<0>(second).hasHealth()) {
+	if (get<0>(second).hasHealth() && !moveEmpty(get<1>(second))) {
 		monsterAttack(second, get<0>(first));
 	}
 }
 
-void Battle::monsterAttack(std::tuple<Monster&, Move&> attacker, Monster& defender) {
+void Battle::monsterAttack(std::tuple<Monster&, Move*> attacker, Monster& defender) {
 	printSpacerL();
-	std::cout << get<0>(attacker).getName() << " used " << get<1>(attacker).getName() << ". \n";
+	Move* mv = get<1>(attacker);
+	std::cout << get<0>(attacker).getName() << " used " << (*mv).getName() << ". \n";
 	Sleep(500);
 	printSpacerS();
 
 	if (!calculateIsHit(attacker, defender)) {
-		attackMiss(get<1>(attacker));
+		attackMiss((*mv));
 	} 
-	else if (get<1>(attacker).getAtkType() == get<1>(attacker).attackTypeStringToEnum("Special")) {
+	else if ((*mv).getAtkType() == (*mv).attackTypeStringToEnum("Special")) {
 		attackSpecial(attacker, defender);
 	}
 	else {
@@ -161,13 +171,13 @@ void Battle::monsterAttack(std::tuple<Monster&, Move&> attacker, Monster& defend
 	Sleep(2000);
 }
 
-void Battle::attackSpecial(std::tuple<Monster&, Move&> attacker, Monster& defender) {
+void Battle::attackSpecial(std::tuple<Monster&, Move*> attacker, Monster& defender) {
 	Monster& atkM = get<0>(attacker);
-	Move& attack = get<1>(attacker);
+	Move* attack = get<1>(attacker);
 	double critVal = calculateCritValue();
 	int damage = calculateDamage(
-		atkM.getSpAtk(), defender.getSpDef(), attack.getPower(), calculateAtkTypeMultiplier(atkM, attack), 
-		calculateDefTypeMultiplier(defender, attack), critVal, calculateRandomDamageModifier()
+		atkM.getSpAtk(), defender.getSpDef(), (*attack).getPower(), calculateAtkTypeMultiplier(atkM, (*attack)), 
+		calculateDefTypeMultiplier(defender, (*attack)), critVal, calculateRandomDamageModifier()
 	);
 
 	// Below To Be Removed
@@ -178,19 +188,19 @@ void Battle::attackSpecial(std::tuple<Monster&, Move&> attacker, Monster& defend
 	// 
 
 	defender.takeDamage(damage);
-	if (attack.getName() != "Struggle") { // Should never touch this as Struggle is never Special. But leave just in case of wacky game mechanics like a special ability flips special and phys
-		attack.decrementUsesByOne();
+	if ((*attack).getName() != "Struggle") { // Should never touch this as Struggle is never Special. But leave just in case of wacky game mechanics like a special ability flips special and phys
+		(*attack).decrementUsesByOne();
 	}
 }
 
 
-void Battle::attackPhysical(std::tuple<Monster&, Move&> attacker, Monster& defender) {
+void Battle::attackPhysical(std::tuple<Monster&, Move*> attacker, Monster& defender) {
 	Monster& atkM = get<0>(attacker);
-	Move& attack = get<1>(attacker);
+	Move* attack = get<1>(attacker);
 	double critVal = calculateCritValue();
 	int damage = calculateDamage(
-		atkM.getAtk(), defender.getDef(), attack.getPower(), calculateAtkTypeMultiplier(atkM, attack),
-		calculateDefTypeMultiplier(defender, attack), critVal, calculateRandomDamageModifier()
+		atkM.getAtk(), defender.getDef(), (*attack).getPower(), calculateAtkTypeMultiplier(atkM, (*attack)),
+		calculateDefTypeMultiplier(defender, (*attack)), critVal, calculateRandomDamageModifier()
 	);
 
 	// Below To Be Removed
@@ -201,8 +211,8 @@ void Battle::attackPhysical(std::tuple<Monster&, Move&> attacker, Monster& defen
 	// 
 
 	defender.takeDamage(damage);
-	if (attack.getName() != "Struggle") {
-		attack.decrementUsesByOne();
+	if ((*attack).getName() != "Struggle") {
+		(*attack).decrementUsesByOne();
 	}
 }
 
@@ -228,8 +238,8 @@ double Battle::calculateRandomDamageModifier() {
 	return (random + 85.0) / 100.0;
 }
 
-bool Battle::calculateIsHit(std::tuple<Monster&, Move&> attacker, Monster& defender) {
-	double moveAccuracy = get<1>(attacker).getAccuracy();
+bool Battle::calculateIsHit(std::tuple<Monster&, Move*> attacker, Monster& defender) {
+	double moveAccuracy = (*get<1>(attacker)).getAccuracy();
 	if (moveAccuracy > 100) {
 		return true;
 	}
@@ -271,19 +281,44 @@ double Battle::calculateDefTypeMultiplier(Monster defender, Move attack) {
 	return x;
 }
 
-Move& Battle::getPlayersMove() {
+Move* Battle::playerChoosesBattleAction() {
+	while (true) {
+		BattleOption choice = playerTurnChoice();
+		if (choice == SWAP) {
+			Monster* mn = playerSelectsMonsterToSwap();
+			if (!monsterEmpty(mn)) {
+				setPlayerActiveMonster(mn);
+				return nullptr;
+			}
+		}
+		else if (choice == FIGHT) {
+			Move* mv = getPlayersMove();
+			if (!moveEmpty(mv)) {
+				return mv;
+			}
+		}
+	}
+}
+
+Move* Battle::getPlayersMove() {
 	while (true) {
 		if (!(*PlayerActiveMonster).hasActiveMoves()) {
-			std::cout <<  (*PlayerActiveMonster).getName() << " is all out of moves. Using Struggle." << '\n';
-			return AllMoves.at("struggle");
+			std::cout << (*PlayerActiveMonster).getName() << " is all out of moves. Using Struggle." << '\n';
+			return &AllMoves.at("struggle");
 		}
 
-		 (*PlayerActiveMonster).printMovesForBattle();
+		(*PlayerActiveMonster).printMovesForBattle();
 		printToConsole("What move should your Nokemon use? ");
-		int slot = promptUserInputInt("Select the number associated the move you would like to use.");
+		int slot = promptUserInputInt("Select the number associated the move you would like to use. (-1 to cancel)");
+		
+		// Check for if player wants to back out to other options
+		if (slot == -1) {
+			return nullptr;
+		}
+
 		Move& mv =  (*PlayerActiveMonster).getMoveFromSlot(slot);
 		if (mv.moveNotEmpty() && mv.hasUsagesLeft()) {
-			return mv;
+			return &mv;
 		}
 		else if (!mv.moveNotEmpty()) {
 			printToConsole("Your monster doesn't have a move assigned to that slot.");
@@ -294,10 +329,10 @@ Move& Battle::getPlayersMove() {
 	}
 }
 
-Move& Battle::getAiMove() {
+Move* Battle::getAiMove() {
 	// Checks monster for Active Moves
 	if (!(*AIActiveMonster).hasActiveMoves()) {
-		return AllMoves.at("struggle");
+		return &AllMoves.at("struggle");
 	}
 
 	srand(time(0));
@@ -306,7 +341,7 @@ Move& Battle::getAiMove() {
 		int slot = (rand() % x) + 1;
 		Move& mv =  (*AIActiveMonster).getMoveFromSlot(slot);
 		if (mv.moveNotEmpty() && mv.hasUsagesLeft()) {
-			return mv;
+			return &mv;
 		}
 		else if (!mv.moveNotEmpty()) {
 			--x;
@@ -314,9 +349,65 @@ Move& Battle::getAiMove() {
 	}
 }
 
-bool Battle::activeMonsterEmpty(Monster* m) {
+bool Battle::monsterEmpty(Monster* m) {
 	if (m) {
 		return false;
 	} 
 	return true;
+}
+
+bool Battle::moveEmpty(Move* m) {
+	if (m) {
+		return false;
+	}
+	return true;
+}
+
+
+BattleOption Battle::playerTurnChoice() {
+	while (true) {
+		displayPlayerTurnOptions();
+		int userChoice = promptUserInputInt("Please choose the number next the the option you would like.");
+
+		switch (userChoice) {
+			case 1:
+				return FIGHT;
+			case 2:
+				return SWAP;
+		}
+		printToConsole("Please choose from the options provided.");
+		Sleep(500);
+	}
+}
+
+void Battle::displayPlayerTurnOptions() {
+	printSpacerS();
+	std::cout << "What would you like to do? \n\t" << "1) Fight \n\t" << "2) Swap Monsters\n";
+}
+
+Monster* Battle::playerSelectsMonsterToSwap() {
+	Monster* m = playerChooseMonster();
+	if (!monsterEmpty(m)) {
+		return m;
+	}
+	else  {
+		return nullptr;
+	}
+}
+
+bool Battle::selectedMonsterAlreadyActive(Monster* m) {
+	return PlayerActiveMonster == m;
+}
+
+void Battle::playerChoosesMonsterToBattle() {
+	while (true) {
+		Monster* m = playerChooseMonster();
+		setPlayerActiveMonster(m);
+		if (monsterEmpty(PlayerActiveMonster)) {
+			printToConsole("You must select a Nokemon to start the battle.");
+		}
+		else {
+			break;
+		}
+	}
 }
