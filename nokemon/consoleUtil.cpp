@@ -1,4 +1,5 @@
 #include "consoleUtil.h"
+#include <Windows.h>
 using std::string;
 using std::cout;
 using std::cin;
@@ -11,7 +12,14 @@ void printSpacerS() {
     cout << "########\n";
 }
 
+void printSpacerGap(int x) {
+    for (x; x > 0; --x) {
+        cout << '\n';
+    }
+}
+
 string promptUserInputString(string prompt) {
+    printSpacerGap(6);
     printSpacerL();
     string response;
     cout << prompt << ": ";
@@ -35,4 +43,8 @@ int promptUserInputInt(string prompt) {
 
 void printToConsole(string s) {
     cout << s << '\n';
+}
+
+void pause(double milliseconds) {
+    Sleep(milliseconds);
 }

@@ -22,8 +22,10 @@ void Monster::printMovesDetailed() {
 void Monster::printMovesForBattle() {
     Move moves[] = { MoveSlot1, MoveSlot2, MoveSlot3, MoveSlot4 };
     for (int i = 0; i < 4; ++i) {
-        std::cout << "Move " << i + 1 << ":\n";
-        moves[i].displayMoveForBattle();
+        if (moves[i].getName() != "Empty") {
+            std::cout << "Move " << i + 1 << ":\n";
+            moves[i].displayMoveForBattle();
+        }
     }
 }
 

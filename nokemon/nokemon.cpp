@@ -19,6 +19,8 @@ int main() {
 	generateAllTypesMovesMonsters();
 
 	printToConsole("Welcome to the world of Not Pokemon, or Nokemon!");
+	pause(1000);
+
 	Trainer p1 = generateTrainer(true);
 	Trainer p2 = generateTrainer();
 

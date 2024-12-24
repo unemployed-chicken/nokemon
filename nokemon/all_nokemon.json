@@ -1,7 +1,7 @@
 {
     "Bulbie": {
         "type": "grass",
-        "hp": 1,
+        "hp": 50,
         "atk": 99,
         "def": 99,
         "spAtk": 99,
@@ -14,7 +14,7 @@
     },
     "Char": {
         "type": "fire",
-        "hp": 100,
+        "hp": 50,
         "atk": 99,
         "def": 99,
         "spAtk": 99,
@@ -27,7 +27,7 @@
     },
     "Squirts": {
         "type": "water",
-        "hp": 100,
+        "hp": 50,
         "atk": 99,
         "def": 99,
         "spAtk": 99,
@@ -40,7 +40,7 @@
     },
     "Skink": {
         "type": "normal",
-        "hp": 100,
+        "hp": 50,
         "atk": 99,
         "def": 99,
         "spAtk": 99,

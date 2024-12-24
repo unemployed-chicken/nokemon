@@ -2,11 +2,10 @@
 using std::string;
 
 Trainer generateTrainer(bool isUser) {
-	string name = "Opponent";
 	if (isUser) {
-		name = promptUserInputString("What is your name");
+		return Trainer(promptUserInputString("What is your name"));
 	}
-	return Trainer(name);
+	return Trainer("Opponent");
 }
 
 Monster promptUserPreferedMonster() {
@@ -20,9 +19,13 @@ Monster promptUserPreferedMonster() {
 		else {
 			auto itr = AllMonsters.find(userInput);
 			if (itr != AllMonsters.end()) {
-				return (*itr).second;
+				Monster m = (*itr).second;
+				std::cout << "You chose " << m.getName() << '\n';
+				pause(1000);
+				return m;
 			}
 			printToConsole("That is not a valid Nokemon. The name is case sensitive. Type 'all' to get a list of Nokemon");
+			pause(1000);
 		}
 	}
 }
@@ -36,18 +39,18 @@ Monster getRandomMonster() {
 	for (auto itr = AllMonsters.begin(); itr != AllMonsters.end(); ++itr) {
 		if (i == index) {
 			return (*itr).second;
-			//break;
 		}
 		++i;
 	}
-	//return m;
 }
 
 void displyBattleField(Monster playersMonster, Monster aisMonster) {
+	printSpacerGap(6);
 	printSpacerL();
+	std::cout << "Opponent's Monster\n";
 	displayActiveMonster(aisMonster);
-	printSpacerS();
-	printSpacerS();
+	printSpacerGap(2);
+	std::cout << "Your Monster\n";
 	displayActiveMonster(playersMonster);
 	printSpacerL();
 }

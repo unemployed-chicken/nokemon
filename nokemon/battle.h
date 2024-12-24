@@ -42,6 +42,8 @@ class Battle {
 	bool selectedMonsterAlreadyActive(Monster* m);
 	void playerChoosesMonsterToBattle();
 	Move* playerChoosesBattleAction();
+	void displayDamageTaken(double damage, Monster defender);
+	void displayFainted(Monster* m, Trainer* t);
 
 public:
 	Battle(Trainer& player, Trainer& ai) {
