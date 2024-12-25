@@ -19,7 +19,7 @@ int main() {
 	generateAllTypesMovesMonsters();
 
 	printToConsole("Welcome to the world of Not Pokemon, or Nokemon!");
-	pause(1000);
+	pause();
 
 	Trainer p1 = generateTrainer(true);
 	Trainer p2 = generateTrainer();
@@ -41,5 +41,6 @@ int main() {
 	else {
 		printToConsole("Sorry, You lost. Better luck next time. =(");
 	}
-	std::cout << "done" << std::endl;
+
+	pause();
 }

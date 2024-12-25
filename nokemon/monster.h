@@ -76,6 +76,7 @@ public:
     }
 
     void printMonster();
+    void printMonsterBrief();
     void printMovesDetailed();
     void printMovesForBattle();
     void attack(Monster& m, int damage);

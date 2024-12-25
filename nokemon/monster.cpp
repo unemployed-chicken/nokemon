@@ -11,6 +11,11 @@ void Monster::printMonster() {
     std::cout << ", Special Defense: " << SpDef << ", Speed: " << Spd << ", Accuracy: " << Acc << ", Evasion: " << Evn << " }\n";
 }
 
+void Monster::printMonsterBrief() {
+    printSpacerS();
+    std::cout << "Name: " << Name << ", Type: " << MonsterType.getObjectType() << '\n';
+}
+
 void Monster::printMovesDetailed() {
     Move moves[] = { MoveSlot1, MoveSlot2, MoveSlot3, MoveSlot4 };
     for (int i = 0; i < 4; ++i) {

@@ -46,5 +46,10 @@ void printToConsole(string s) {
 }
 
 void pause(double milliseconds) {
+    //std::system("pause");
     Sleep(milliseconds);
+}
+
+void pause() {
+    std::system("pause");
 }

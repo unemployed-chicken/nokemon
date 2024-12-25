@@ -21,11 +21,11 @@ Monster promptUserPreferedMonster() {
 			if (itr != AllMonsters.end()) {
 				Monster m = (*itr).second;
 				std::cout << "You chose " << m.getName() << '\n';
-				pause(1000);
+				pause(1250);
 				return m;
 			}
 			printToConsole("That is not a valid Nokemon. The name is case sensitive. Type 'all' to get a list of Nokemon");
-			pause(1000);
+			pause();
 		}
 	}
 }

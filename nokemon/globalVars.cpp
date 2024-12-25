@@ -60,7 +60,7 @@ void displayAllMoves() {
 
 void displayAllMonsters() {
 	for (auto itr = AllMonsters.begin(); itr != AllMonsters.end(); ++itr) {
-		(*itr).second.printMonster();
+		(*itr).second.printMonsterBrief();
 	}
 }
 
